@@ -16,7 +16,7 @@ object HomePage {
       http("getAboutUs")
         .get("/about-us")
         .check(status.is(200))
-        .check(substring("About Us"))
+        .check(css("div.col-7 h2").is("About Us"))
     )
 
 }

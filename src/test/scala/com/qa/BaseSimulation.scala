@@ -16,7 +16,7 @@ class BaseSimulation extends Simulation {
   }
 
   val initSession = exec(flushCookieJar)
-    .exec(session => session.set("randomNumber", rnd.nextInt))
+    .exec(session => session.set("randomNumber", rnd.nextInt()))
     .exec(session => session.set("customerLoggedIn", false))
     .exec(addCookie(Cookie("sessionId", randomString(10)).withDomain(domain)))
 

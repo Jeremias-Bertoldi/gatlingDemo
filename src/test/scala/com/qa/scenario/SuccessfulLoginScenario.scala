@@ -16,7 +16,7 @@ case class SuccessfulLoginScenario() extends BaseSimulation {
       .exec(Login.loginSuccessful).exitHereIfFailed
 
   setUp(
-    successfulScn.inject(constantUsersPerSec(10) during(10.seconds))
+    successfulScn.inject(constantUsersPerSec(5) during(10.seconds))
       .protocols(httpProtocol)
     )
 }

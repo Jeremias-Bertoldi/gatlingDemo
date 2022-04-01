@@ -17,8 +17,8 @@ case class UnsuccessfulLoginScenario() extends BaseSimulation {
 
   setUp(
     unsuccessfulScn.inject(
-      rampUsers(5) during(20.seconds),
-      constantUsersPerSec(10) during(20.seconds))
+      rampUsers(5) during(10.seconds),
+      constantUsersPerSec(5) during(10.seconds))
       .protocols(httpProtocol)
     )
 }

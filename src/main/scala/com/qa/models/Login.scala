@@ -5,8 +5,8 @@ import io.gatling.http.Predef._
 
 object Login {
 
-  val csvFeederLoginSuccessful = csv("loginSuccessful.csv").circular
-  val csvFeederLoginWithFails = csv("loginFailed.csv").circular
+  val csvFeederLoginSuccessful = csv("data/loginSuccessful.csv").circular
+  val csvFeederLoginWithFails = csv("data/loginFailed.csv").circular
 
   lazy val goToLoginPage =
       exec(http("Load Login Page")
@@ -33,7 +33,7 @@ object Login {
         .formParam("username", "#{username}")
         .formParam("password", "#{password}")
         .check(status.is(302))
-        .check(substring("Invalid credentials"))
+        .check(css("div.alert alert-danger").is("Invalid credentials"))
       )
       .exec(session => session.set("customerLoggedIn", false))
 
