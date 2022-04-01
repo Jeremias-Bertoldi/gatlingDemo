@@ -10,4 +10,12 @@ object HomePage {
       .get("/")
       .check(status.is(200))
 
+  lazy val  getAboutUs =
+    exec(
+      http("getAboutUs")
+        .get("/about-us")
+        .check(status.is(200))
+        .check(substring("About Us"))
+    )
+
 }

@@ -9,6 +9,8 @@ case class VisitScenario() extends BaseSimulation {
   val scn =
     scenario(getClass.getSimpleName)
       .exec(HomePage.getHomePage).exitHereIfFailed
+      .pause(3)
+      .exec(HomePage.getAboutUs).exitHereIfFailed
 
   setUp(scn.inject(atOnceUsers(1)).protocols(httpProtocol))
 
