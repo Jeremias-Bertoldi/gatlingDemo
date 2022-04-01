@@ -8,6 +8,7 @@ case class VisitScenario() extends BaseSimulation {
 
   val scn =
     scenario(getClass.getSimpleName)
+      exec(initSession)
       .exec(HomePage.getHomePage).exitHereIfFailed
       .pause(3)
       .exec(HomePage.getAboutUs).exitHereIfFailed

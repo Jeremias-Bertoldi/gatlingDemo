@@ -9,6 +9,7 @@ object HomePage {
     http("getHomePage")
       .get("/")
       .check(status.is(200))
+      .check(css("#_csrf", "content").saveAs("crsfValue"))
 
   lazy val  getAboutUs =
     exec(
