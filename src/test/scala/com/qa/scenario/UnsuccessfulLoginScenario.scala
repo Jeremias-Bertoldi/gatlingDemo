@@ -10,9 +10,11 @@ case class UnsuccessfulLoginScenario() extends BaseSimulation {
 
   val unsuccessfulScn =
     scenario(getClass.getSimpleName)
-      .exec(initSession)
       .exec(HomePage.getHomePage)
+      .pause(2)
       .exec(Login.goToLoginPage)
+      .pause(2)
+      feed(csvFeederLoginWithFails)
       .exec(Login.loginUnsuccessful).exitHereIfFailed
 
   setUp(

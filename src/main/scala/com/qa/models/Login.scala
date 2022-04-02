@@ -5,36 +5,34 @@ import io.gatling.http.Predef._
 
 object Login {
 
-  val csvFeederLoginSuccessful = csv("data/loginSuccessful.csv").circular
-  val csvFeederLoginWithFails = csv("data/loginFailed.csv").circular
-
   lazy val goToLoginPage =
       exec(http("Load Login Page")
-        .get("/login")
+        .get("/#{loginButton}")
         .check(status.is(200))
-        .check(substring("Username:")))
+        .check(substring("Username:"))
+      .check(css("input[name='username']").saveAs("loginForm"))
+      ).exec(session => {
+        print(session("loginForm").as[String])
+        session
+      })
 
   lazy val loginSuccessful =
-    feed(csvFeederLoginSuccessful)
-      .exec(http("Successful Login")
-        .post("/login")
+      exec(http("Successful Login")
+        .post("/#{loginForm}")
         .formParam("_csrf", "#{crsfValue}")
         .formParam("username", "#{username}")
         .formParam("password", "#{password}")
         .check(status.is(200))
       )
-      .exec(session => session.set("customerLoggedIn", true))
 
   lazy val loginUnsuccessful =
-    feed(csvFeederLoginWithFails)
-      .exec(http("Unsuccessful Login")
-        .post("/login")
+      exec(http("Unsuccessful Login")
+        .post("/#{loginForm}")
         .formParam("_csrf", "#{crsfValue}")
         .formParam("username", "#{username}")
         .formParam("password", "#{password}")
         .check(status.is(302))
         .check(css("div.alert alert-danger").is("Invalid credentials"))
       )
-      .exec(session => session.set("customerLoggedIn", false))
 
 }
